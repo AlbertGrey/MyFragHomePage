@@ -1,11 +1,13 @@
 package tw.org.iii.myfraghomepage;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -46,7 +49,7 @@ public class AttrPage extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)    {
-
+        queue= Volley.newRequestQueue(getContext());
         View v = inflater.inflate(R.layout.fragment_attr_page,container,false);
         listView=(ListView)v.findViewById(android.R.id.list);
         new attrHttpasync().execute();
@@ -67,7 +70,7 @@ public class AttrPage extends ListFragment {
         protected LinkedList<AttrListModel> doInBackground(String... strings) {
             JSONArray jsonArray = null;
             data = new LinkedList<>();
-            jstring = JSONFuction.getJSONFromurl("http://36.235.38.228:8080/J2EE/getData.jsp?start=1&rows=15");
+            jstring = JSONFuction.getJSONFromurl("http://36.235.38.228:8080/J2EE/getData.jsp?start=1&rows=25");
             try {
                 jsonArray = new JSONArray(jstring);
                 Log.v("grey","jason"+jsonArray);
@@ -97,10 +100,8 @@ public class AttrPage extends ListFragment {
             Log.v("grey","json22 = "+jsonresult);
             adapter = new MylistAdapter(getContext(),data);
             setListAdapter(adapter);
-//            SimpleAdapter adapter = new SimpleAdapter(getContext(),data,R.layout.item_layout,from,to);
             Log.v("grey","data=="+data);
 
-//            setListAdapter(adapter);
         }
     }
     public class MylistAdapter extends BaseAdapter {
@@ -138,6 +139,7 @@ public class AttrPage extends ListFragment {
         @Override
         public View getView(final int position, View view, ViewGroup viewGroup) {
             ViewHolder holder;
+            reslut = data.get(position);
             if(view==null){
                 holder = new ViewHolder();
                 view = inflater.inflate(R.layout.item_layout,viewGroup,false);
@@ -146,17 +148,9 @@ public class AttrPage extends ListFragment {
                 holder.itemaddress = (TextView)view.findViewById(R.id.item_addr);
                 holder.itemimage = (ImageView)view.findViewById(R.id.item_image);
                 view.setTag(holder);
-                mesbtn = view.findViewById(R.id.item_message_btn);
-                addbtn = view.findViewById(R.id.item_add_btn);
-                addbtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        addFavorite("1",reslut.getAid());
-                        Log.v("grey","result1_id = "+reslut.getAid());
-                    }
-                });
-
-
+                holder.mesbtn = view.findViewById(R.id.item_message_btn);
+                holder.addbtn = view.findViewById(R.id.item_add_btn);
+                Log.v("grey","resaid = "+reslut.getAid());
             }else{
                 holder = (ViewHolder) view.getTag();
             }
@@ -171,9 +165,8 @@ public class AttrPage extends ListFragment {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    reslut = data.get(position);
                     Intent intent = new Intent(getActivity(),DetailActivity.class);
-                    intent.putExtra("id",reslut.getAid());
+                    intent.putExtra("total_id",reslut.getAid());
                     Log.v("grey","attid = "+reslut.getAid());
                     intent.putExtra("name",reslut.getName());
                     intent.putExtra("addr",reslut.getAddress());
@@ -183,15 +176,33 @@ public class AttrPage extends ListFragment {
                 }
             });
 
+            holder.addbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    addFavorite("1",reslut.getAid());
+                    Log.v("grey",reslut.getAid());
+                    showAletDialog();
+                }
+            });
+
             return view;
         }
 
+
     }
+
+    private void showAletDialog(){
+        DialogFragment newFragment = AlertDialogFragment.newInstance(1);
+        newFragment.show(getFragmentManager(), "dialog");
+    }
+
     static class ViewHolder
     {
         public ImageView itemimage;
         public TextView itemtitle;
         public TextView itemaddress;
+        public Button mesbtn;
+        public Button addbtn;
     }
 //     //* @param mail        信箱 test123@gmail.com
 //     //* @param password    密碼 test123

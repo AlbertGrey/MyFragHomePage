@@ -14,6 +14,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,21 +24,30 @@ import java.util.Map;
  */
 
 public class LoginPage extends AppCompatActivity{
-
     private RequestQueue queue;
     private EditText loginaccount,loginpasswd;
     private Button loginbtn,newbtn;
+    private String account,passwd;
     @Override
-    public void onCreate(Bundle savedInstanceState,PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
+        queue= Volley.newRequestQueue(this);
 
         loginaccount = findViewById(R.id.login_account);
         loginpasswd = findViewById(R.id.login_passwd);
         loginbtn = findViewById(R.id.login_button);
         newbtn = findViewById(R.id.login_newbutton);
 
-        Intent intent = getIntent();
+        loginbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                account = loginaccount.getText().toString();
+                passwd = loginpasswd.getText().toString();
+                sighin(account,passwd);
+                Log.v("grey",account+":"+passwd);
+            }
+        });
     }
     private void sighin(String mail,String password){
         final String p1=mail;

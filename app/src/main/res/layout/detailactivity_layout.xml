@@ -58,15 +58,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="留言"
-            android:onClick="mes"/>
+            android:text="留言"/>
         <Button
             android:id="@+id/detail_loveadd"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="收藏"
-            android:onClick="loveadd"/>
+            android:text="收藏"/>
     </LinearLayout>
 
 </LinearLayout>

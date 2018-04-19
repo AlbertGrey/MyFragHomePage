@@ -21,12 +21,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="帳號 : "
-            android:textSize="30dp"/>
+            android:textSize="30dp"
+            />
         <EditText
             android:id="@+id/login_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30dp"/>
+            android:textSize="30dp"
+            android:hint="請輸入電子郵件"/>
     </LinearLayout>
 
     <LinearLayout
@@ -42,7 +44,8 @@
             android:id="@+id/login_passwd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30dp"/>
+            android:textSize="30dp"
+            android:hint="請輸入密碼"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
