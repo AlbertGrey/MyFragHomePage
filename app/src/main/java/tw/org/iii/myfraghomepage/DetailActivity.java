@@ -1,6 +1,7 @@
 package tw.org.iii.myfraghomepage;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -25,18 +26,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DetailActivity extends AppCompatActivity{
-    private TextView name,address,description,id;
+    private TextView name,address,description,id,opentime,phone;
     private ImageView img;
     private String imgs,aid;
     private Button mes,loveadd;
     private boolean ismember = false;
     private RequestQueue queue;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detailactivity_layout);
 
+        context = this;
         queue= Volley.newRequestQueue(this);
 
         id = findViewById(R.id.detail_id);
@@ -46,6 +49,8 @@ public class DetailActivity extends AppCompatActivity{
         description = findViewById(R.id.detail_description);
         mes = findViewById(R.id.detail_mes);
         loveadd = findViewById(R.id.detail_loveadd);
+        opentime = findViewById(R.id.detail_memotime);
+        phone = findViewById(R.id.detail_phone);
 
         mes = findViewById(R.id.detail_mes);
         loveadd = findViewById(R.id.detail_loveadd);
@@ -56,7 +61,9 @@ public class DetailActivity extends AppCompatActivity{
         aid = id.getText().toString();
         name.setText(intent.getStringExtra("name"));
         address.setText(intent.getStringExtra("addr"));
+        opentime.setText(intent.getStringExtra("opentime"));
         description.setText(intent.getStringExtra("description"));
+        phone.setText(intent.getStringExtra("phone"));
         imgs = intent.getStringExtra("img");
         GlideApp.with(this).load(imgs).into(img);
         Log.v("grey","id = "+id);
@@ -66,9 +73,17 @@ public class DetailActivity extends AppCompatActivity{
         loveadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (ismember==true){
                     addFavorite("1",aid);
                     Log.v("grey",aid);
                     showAletDialog();
+                }else {
+                   Intent intent = new Intent(context,LoginPage.class);
+                   startActivity(intent);
+                   ismember=true;
+
+                }
+
             }
         });
 

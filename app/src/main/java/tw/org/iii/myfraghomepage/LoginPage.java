@@ -1,6 +1,7 @@
 package tw.org.iii.myfraghomepage;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +30,7 @@ public class LoginPage extends AppCompatActivity{
     private EditText loginaccount,loginpasswd;
     private Button loginbtn,newbtn;
     private String account,passwd;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,4 +74,10 @@ public class LoginPage extends AppCompatActivity{
         queue.add(stringRequest);
     }
 
+    public void newmember(View view) {
+        Uri uri = Uri.parse("https://developer.android.com/reference/android/net/Uri.html");
+        Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+        startActivity(intent);
+
+    }
 }

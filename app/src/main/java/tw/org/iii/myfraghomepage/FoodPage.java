@@ -56,22 +56,14 @@ public class FoodPage extends ListFragment {
         new attrHttpasync().execute();
         return v;
     }
-    //    private void getScreen(){
-//        //螢幕寬高
-//        DisplayMetrics metrics = new DisplayMetrics();
-//        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-//        screenWidth = metrics.widthPixels;
-//        screenHeight = metrics.heightPixels;
-//        newHeight = screenWidth / 16 * 9;
-//        Log.v("grey","手機寬高1 ＝" + metrics.widthPixels+" X "+metrics.heightPixels);
-//    }
+
     private class attrHttpasync extends AsyncTask<String, Void, LinkedList<AttrListModel>> {
 
         @Override
         protected LinkedList<AttrListModel> doInBackground(String... strings) {
             JSONArray jsonArray = null;
             data = new LinkedList<>();
-            jstring = JSONFuction.getJSONFromurl("http://36.235.38.228:8080/J2EE/getData.jsp?start=1&rows=25");
+            jstring = JSONFuction.getJSONFromurl("http://36.235.38.228:8080/fsit04/restaruant");
             try {
                 jsonArray = new JSONArray(jstring);
                 Log.v("grey","jason"+jsonArray);
@@ -84,7 +76,9 @@ public class FoodPage extends ListFragment {
                     listModel.setName(jsonObject2.getString("stitle"));
                     listModel.setAddress(jsonObject2.getString("address"));
                     listModel.setDescription(jsonObject2.getString("xbody"));
+                    listModel.setTel(jsonObject2.getString("phone"));
                     listModel.setImgs(jsonObject3.getString("url"));
+
                     data.add(listModel);
                 }
                 Log.v("grey","json = "+jsonArray);
@@ -153,19 +147,34 @@ public class FoodPage extends ListFragment {
                 mesbtn = view.findViewById(R.id.item_message_btn);
                 addbtn = view.findViewById(R.id.item_add_btn);
                 Log.v("grey","resaid = "+reslut.getAid());
-                addbtn.setOnClickListener(new View.OnClickListener() {
+                holder.addbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(ismember!=false){
+                        if (ismember==true){
                             addFavorite("1",reslut.getAid());
-                            Log.v("grey","result1_id = "+reslut.getAid());
+                            Log.v("grey",reslut.getAid());
                             showAletDialog();
                         }else {
-                            Intent intent = new Intent(getContext(),LoginPage.class);
+                            Intent intent = new Intent(getContext(),LoginActivity.class);
                             startActivity(intent);
                             ismember=true;
                         }
 
+                    }
+                });
+                //mesbtn
+                holder.mesbtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (ismember==true){
+                            addFavorite("1",reslut.getAid());
+                            Log.v("grey",reslut.getAid());
+                            showAletDialog();
+                        }else {
+                            Intent intent = new Intent(getContext(),LoginActivity.class);
+                            startActivity(intent);
+                            ismember=true;
+                        }
                     }
                 });
 
@@ -191,6 +200,7 @@ public class FoodPage extends ListFragment {
                     intent.putExtra("addr",reslut.getAddress());
                     intent.putExtra("img",reslut.getImgs());
                     intent.putExtra("description",reslut.getDescription());
+                    intent.putExtra("phone",reslut.getTel());
                     startActivity(intent);
                 }
             });

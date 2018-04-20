@@ -82,6 +82,7 @@ public class AttrPage extends ListFragment {
                     listModel.setAid(jsonObject2.getString("total_id"));
                     listModel.setName(jsonObject2.getString("stitle"));
                     listModel.setAddress(jsonObject2.getString("address"));
+                    listModel.setOpentime(jsonObject2.getString("MEMO_TIME"));
                     listModel.setDescription(jsonObject2.getString("xbody"));
                     listModel.setImgs(jsonObject3.getString("url"));
                     data.add(listModel);
@@ -147,6 +148,7 @@ public class AttrPage extends ListFragment {
                 holder.itemtitle = (TextView)view.findViewById(R.id.item_title);
                 holder.itemaddress = (TextView)view.findViewById(R.id.item_addr);
                 holder.itemimage = (ImageView)view.findViewById(R.id.item_image);
+
                 view.setTag(holder);
                 holder.mesbtn = view.findViewById(R.id.item_message_btn);
                 holder.addbtn = view.findViewById(R.id.item_add_btn);
@@ -172,16 +174,39 @@ public class AttrPage extends ListFragment {
                     intent.putExtra("addr",reslut.getAddress());
                     intent.putExtra("img",reslut.getImgs());
                     intent.putExtra("description",reslut.getDescription());
+                    intent.putExtra("opentime",reslut.getOpentime());
                     startActivity(intent);
                 }
             });
-
+            //addbtn
             holder.addbtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    addFavorite("1",reslut.getAid());
-                    Log.v("grey",reslut.getAid());
-                    showAletDialog();
+                    if (ismember==true){
+                        addFavorite("1",reslut.getAid());
+                        Log.v("grey",reslut.getAid());
+                        showAletDialog();
+                    }else {
+                        Intent intent = new Intent(getContext(),LoginActivity.class);
+                        startActivity(intent);
+                        ismember=true;
+                    }
+
+                }
+            });
+            //mesbtn
+            holder.mesbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (ismember==true){
+                        addFavorite("1",reslut.getAid());
+                        Log.v("grey",reslut.getAid());
+                        showAletDialog();
+                    }else {
+                        Intent intent = new Intent(getContext(),LoginActivity.class);
+                        startActivity(intent);
+                        ismember=true;
+                    }
                 }
             });
 
