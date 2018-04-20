@@ -187,7 +187,7 @@ public class AttrPage extends ListFragment {
                         Log.v("grey",reslut.getAid());
                         showAletDialog();
                     }else {
-                        Intent intent = new Intent(getContext(),LoginActivity.class);
+                        Intent intent = new Intent(getActivity(),LoginActivity.class);
                         startActivity(intent);
                         ismember=true;
                     }
@@ -198,15 +198,9 @@ public class AttrPage extends ListFragment {
             holder.mesbtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (ismember==true){
-                        addFavorite("1",reslut.getAid());
-                        Log.v("grey",reslut.getAid());
-                        showAletDialog();
-                    }else {
-                        Intent intent = new Intent(getContext(),LoginActivity.class);
+
+                        Intent intent = new Intent(getActivity(),MessagePage.class);
                         startActivity(intent);
-                        ismember=true;
-                    }
                 }
             });
 
@@ -279,5 +273,31 @@ public class AttrPage extends ListFragment {
         };
         queue.add(stringRequest);
 
+    }
+
+
+    private void addMessage(String user_name,String total_id,String msg) {
+        String url ="http://36.235.38.228:8080/fsit04/Views_message";
+        final String p1 =user_name;
+        final String p2=total_id;
+        final String p3=msg;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.v("chad",response);
+                    }
+                }, null){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> m1 =new HashMap<>();
+                m1.put("user_name",p1);
+                m1.put("total_id", p2);
+                m1.put("msg",p3);
+                return m1;
+            }
+        };
+        queue.add(stringRequest);
     }
 }

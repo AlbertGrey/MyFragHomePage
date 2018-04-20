@@ -40,7 +40,7 @@ public class FoodPage extends ListFragment {
     private ListView listView;
     private String jstring;
     private JSONObject jsonObject;
-    private MylistAdapter adapter;
+    private MyfoodlistAdapter adapter;
     private Button mesbtn,addbtn;
     private float screenWidth,screenHeight,newHeight;
     private boolean ismember = false;
@@ -93,7 +93,7 @@ public class FoodPage extends ListFragment {
         protected void onPostExecute(LinkedList jsonresult) {
             super.onPostExecute(jsonresult);
             Log.v("grey","json22 = "+jsonresult);
-            adapter = new MylistAdapter(getContext(),data);
+            adapter = new MyfoodlistAdapter(getContext(),data);
             setListAdapter(adapter);
 //            SimpleAdapter adapter = new SimpleAdapter(getContext(),data,R.layout.item_layout,from,to);
             Log.v("grey","data=="+data);
@@ -101,7 +101,7 @@ public class FoodPage extends ListFragment {
 //            setListAdapter(adapter);
         }
     }
-    public class MylistAdapter extends BaseAdapter {
+    public class MyfoodlistAdapter extends BaseAdapter {
 
         private Context context;
         private LayoutInflater inflater;
@@ -111,7 +111,7 @@ public class FoodPage extends ListFragment {
         private TextView itemaddr;
         private ImageView itemimage;
 
-        public MylistAdapter(Context context,
+        public MyfoodlistAdapter(Context context,
                              LinkedList<AttrListModel> linklist) {
             this.context = context;
             this.data = linklist;
@@ -155,7 +155,7 @@ public class FoodPage extends ListFragment {
                             Log.v("grey",reslut.getAid());
                             showAletDialog();
                         }else {
-                            Intent intent = new Intent(getContext(),LoginActivity.class);
+                            Intent intent = new Intent(getActivity(),LoginActivity.class);
                             startActivity(intent);
                             ismember=true;
                         }
@@ -166,15 +166,8 @@ public class FoodPage extends ListFragment {
                 holder.mesbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (ismember==true){
-                            addFavorite("1",reslut.getAid());
-                            Log.v("grey",reslut.getAid());
-                            showAletDialog();
-                        }else {
-                            Intent intent = new Intent(getContext(),LoginActivity.class);
-                            startActivity(intent);
-                            ismember=true;
-                        }
+                        Intent intent = new Intent(getActivity(),MessagePage.class);
+                        startActivity(intent);
                     }
                 });
 

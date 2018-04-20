@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         //toolbar
         toolbar = findViewById(R.id.toolbar);
+        toolbar.inflateMenu(R.menu.main_toolbar_menu);
         setSupportActionBar(toolbar);
 
         //因為toolbar 而使用 tablayout
