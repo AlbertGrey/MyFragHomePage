@@ -47,15 +47,17 @@ public class LoginPage extends AppCompatActivity{
             public void onClick(View view) {
                 account = loginaccount.getText().toString();
                 passwd = loginpasswd.getText().toString();
-                sighin(account,passwd);
+                sighin(account, "",passwd,"1");
                 Log.v("grey",account+":"+passwd);
             }
         });
     }
-    private void sighin(String mail,String password){
+    private void sighin(String mail,String name,String password,String type){
         final String p1=mail;
         final String p2=password;
-        String url ="http://36.234.10.186:8080/fsit04/sighin.jsp";
+        final String p3=type;
+        final String p4=name;
+        String url ="http://36.235.38.228:8080/fsit04/app/sighin";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -68,9 +70,13 @@ public class LoginPage extends AppCompatActivity{
                 HashMap<String,String> m1 =new HashMap<>();
                 m1.put("mail",p1);
                 m1.put("password", p2);
+                m1.put("type",p3);
+                m1.put("name",p4);
                 return m1;
             }
         };
+
+
         queue.add(stringRequest);
     }
 
