@@ -3,6 +3,7 @@ package tw.org.iii.myfraghomepage;
 import android.Manifest;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -11,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -46,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         toolbar.inflateMenu(R.menu.main_toolbar_menu);
         setSupportActionBar(toolbar);
 
-
         //詢問權限
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -55,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             initdata();
         }
-
         //因為toolbar 而使用 tablayout
         tabLayout = findViewById(R.id.tablayout);
         //viewpager 滑動
@@ -83,16 +83,24 @@ public class MainActivity extends AppCompatActivity {
     //menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_toolbar_menu, menu);
+        getMenuInflater().inflate(R.menu.main_toolbar_menu,menu);
+        MenuItem searchItem = menu.findItem(R.id.search_btn);
 
-        MenuItem menuSearchItem = menu.findItem(R.id.search_btn);
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menuSearchItem.getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconifiedByDefault(true);
+        searchItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.search_btn:
+                        Intent intent = new Intent(MainActivity.this,SearchPage.class);
+                        startActivity(intent);
+                        break;
+                }
+                return false;
+            }
+        });
         return true;
     }
+
 
 
     //詢問權限
