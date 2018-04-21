@@ -42,7 +42,7 @@ public class AttrPage extends ListFragment {
     private MylistAdapter adapter;
     private Button mesbtn,addbtn;
     private float screenWidth,screenHeight,newHeight;
-    private boolean ismember = false;
+    private boolean ismember ;
     private RequestQueue queue;
 
 
@@ -277,29 +277,10 @@ public class AttrPage extends ListFragment {
 
     }
 
+    private boolean ismember(){
 
-    private void addMessage(String user_name,String total_id,String msg) {
-        String url ="http://36.235.38.228:8080/fsit04/Views_message";
-        final String p1 =user_name;
-        final String p2=total_id;
-        final String p3=msg;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
 
-                        Log.v("chad",response);
-                    }
-                }, null){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> m1 =new HashMap<>();
-                m1.put("user_name",p1);
-                m1.put("total_id", p2);
-                m1.put("msg",p3);
-                return m1;
-            }
-        };
-        queue.add(stringRequest);
+
+        return false;
     }
 }
