@@ -1,6 +1,7 @@
 package tw.org.iii.myfraghomepage;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -106,5 +107,12 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void newmember(View view) {
+        Uri uri = Uri.parse("https://www.google.com/");
+        Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+        startActivity(intent);
+
     }
 }

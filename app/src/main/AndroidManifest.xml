@@ -24,6 +24,7 @@
         </activity>
         <activity android:name=".DetailActivity" />
         <activity android:name=".LoginPage" />
+        <activity android:name=".MessagePage"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

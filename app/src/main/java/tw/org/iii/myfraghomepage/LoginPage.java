@@ -74,10 +74,5 @@ public class LoginPage extends AppCompatActivity{
         queue.add(stringRequest);
     }
 
-    public void newmember(View view) {
-        Uri uri = Uri.parse("https://developer.android.com/reference/android/net/Uri.html");
-        Intent intent = new Intent(Intent.ACTION_VIEW,uri);
-        startActivity(intent);
 
-    }
 }
