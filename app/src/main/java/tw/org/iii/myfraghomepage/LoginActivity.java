@@ -54,7 +54,6 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setReadPermissions("email");
         // If using in a fragment
 //        loginButton.setFragment(this);
-
         // Callback registration
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -74,7 +73,8 @@ public class LoginActivity extends AppCompatActivity {
                                 try {
                                     String email = object.getString("email");
                                     String birthday = object.getString("birthday");
-                                    Log.v("grey",email+":"+birthday);
+                                    String name = object.getString("name");
+                                    Log.v("grey",name+":"+email+":"+birthday);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -97,8 +97,6 @@ public class LoginActivity extends AppCompatActivity {
                 // App code
             }
         });
-
-
 
 
     }

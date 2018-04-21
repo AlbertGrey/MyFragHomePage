@@ -78,7 +78,9 @@ public class AttrPage extends ListFragment {
                     JSONObject jsonObject2 = jsonArray.getJSONObject(i);
                     JSONArray imgarray = jsonObject2.getJSONArray("imgs");
                     JSONObject jsonObject3 = imgarray.getJSONObject(0);
+
                     AttrListModel listModel = new AttrListModel();
+
                     listModel.setAid(jsonObject2.getString("total_id"));
                     listModel.setName(jsonObject2.getString("stitle"));
                     listModel.setAddress(jsonObject2.getString("address"));

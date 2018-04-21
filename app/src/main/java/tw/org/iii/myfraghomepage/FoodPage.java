@@ -71,7 +71,9 @@ public class FoodPage extends ListFragment {
                     JSONObject jsonObject2 = jsonArray.getJSONObject(i);
                     JSONArray imgarray = jsonObject2.getJSONArray("imgs");
                     JSONObject jsonObject3 = imgarray.getJSONObject(0);
+
                     AttrListModel listModel = new AttrListModel();
+
                     listModel.setAid(jsonObject2.getString("total_id"));
                     listModel.setName(jsonObject2.getString("stitle"));
                     listModel.setAddress(jsonObject2.getString("address"));
@@ -112,7 +114,7 @@ public class FoodPage extends ListFragment {
         private ImageView itemimage;
 
         public MyfoodlistAdapter(Context context,
-                             LinkedList<AttrListModel> linklist) {
+                                 LinkedList<AttrListModel> linklist) {
             this.context = context;
             this.data = linklist;
             this.inflater = LayoutInflater.from(context);
@@ -144,8 +146,8 @@ public class FoodPage extends ListFragment {
                 holder.itemaddress = (TextView)view.findViewById(R.id.item_addr);
                 holder.itemimage = (ImageView)view.findViewById(R.id.item_image);
                 view.setTag(holder);
-                mesbtn = view.findViewById(R.id.item_message_btn);
-                addbtn = view.findViewById(R.id.item_add_btn);
+                holder.mesbtn = view.findViewById(R.id.item_message_btn);
+                holder.addbtn = view.findViewById(R.id.item_add_btn);
                 Log.v("grey","resaid = "+reslut.getAid());
                 holder.addbtn.setOnClickListener(new View.OnClickListener() {
                     @Override

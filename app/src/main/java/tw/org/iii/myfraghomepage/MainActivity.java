@@ -23,8 +23,6 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -43,8 +41,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
+        //toolbar
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.inflateMenu(R.menu.main_toolbar_menu);
+        setSupportActionBar(toolbar);
+
 
         //詢問權限
         if (ContextCompat.checkSelfPermission(this,
@@ -54,11 +55,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             initdata();
         }
-
-        //toolbar
-        toolbar = findViewById(R.id.toolbar);
-        toolbar.inflateMenu(R.menu.main_toolbar_menu);
-        setSupportActionBar(toolbar);
 
         //因為toolbar 而使用 tablayout
         tabLayout = findViewById(R.id.tablayout);
@@ -83,6 +79,21 @@ public class MainActivity extends AppCompatActivity {
 //
 //        Log.v("grey","手機寬高 ＝" + metrics.widthPixels+" X "+metrics.heightPixels);
     }
+
+    //menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_toolbar_menu, menu);
+
+        MenuItem menuSearchItem = menu.findItem(R.id.search_btn);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menuSearchItem.getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(true);
+        return true;
+    }
+
 
     //詢問權限
     @Override
@@ -127,25 +138,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("景點"));
         tabLayout.addTab(tabLayout.newTab().setText("美食"));
     }
-    //menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_toolbar_menu, menu);
 
-        MenuItem menuSearchItem = menu.findItem(R.id.search_btn);
-
-        // Get the SearchView and set the searchable configuration
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menuSearchItem.getActionView();
-
-        // Assumes current activity is the searchable activity
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
-        // 這邊讓icon可以還原到搜尋的icon
-        searchView.setIconifiedByDefault(true);
-        return true;
-    }
 
 
     public void topage1(View view) {
