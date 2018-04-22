@@ -12,13 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary">
-
-
     </android.support.v7.widget.Toolbar>
-    <ListView
-        android:id="@+id/message_list"
+    <WebView
+        android:id="@+id/mes_webview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent">
+
+    </WebView>
 
 
 </LinearLayout>

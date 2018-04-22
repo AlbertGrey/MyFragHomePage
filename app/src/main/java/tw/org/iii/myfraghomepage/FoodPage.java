@@ -150,6 +150,7 @@ public class FoodPage extends ListFragment {
                 holder.mesbtn = view.findViewById(R.id.item_message_btn);
                 holder.addbtn = view.findViewById(R.id.item_add_btn);
                 Log.v("grey","resaid = "+reslut.getAid());
+                //addbtn
                 holder.addbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

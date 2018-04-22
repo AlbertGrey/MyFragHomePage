@@ -4,9 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/edit_btn"
+        android:id="@+id/add_button"
         android:icon="@drawable/ic_edit"
-        android:title="search"
+        android:title="加入最愛"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/mes_button"
+        android:icon="@drawable/ic_edit"
+        android:title="留言"
         app:showAsAction="never"/>
 
 </menu>

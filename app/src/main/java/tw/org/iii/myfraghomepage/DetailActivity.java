@@ -8,7 +8,11 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,10 +33,11 @@ public class DetailActivity extends AppCompatActivity{
     private TextView name,address,description,id,opentime,phone;
     private ImageView img;
     private String imgs,aid;
-    private Button mes,loveadd;
     private boolean ismember = false;
     private RequestQueue queue;
     private Context context;
+
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,18 +47,19 @@ public class DetailActivity extends AppCompatActivity{
         context = this;
         queue= Volley.newRequestQueue(this);
 
+        toolbar = findViewById(R.id.detail_toolbar);
+        toolbar.inflateMenu(R.menu.mes_toolbar_menu);
+        toolbar.setTitle(" ");
+        setSupportActionBar(toolbar);
+
         id = findViewById(R.id.detail_id);
         name = findViewById(R.id.detail_name);
         address = findViewById(R.id.detail_address);
         img = findViewById(R.id.detail_img);
         description = findViewById(R.id.detail_description);
-        mes = findViewById(R.id.detail_mes);
-        loveadd = findViewById(R.id.detail_loveadd);
         opentime = findViewById(R.id.detail_memotime);
         phone = findViewById(R.id.detail_phone);
 
-        mes = findViewById(R.id.detail_mes);
-        loveadd = findViewById(R.id.detail_loveadd);
 
 
         Intent intent = getIntent();
@@ -70,24 +76,51 @@ public class DetailActivity extends AppCompatActivity{
         Log.v("grey","aid = "+aid);
         Log.v("grey","name = ?"+name);
 
-        loveadd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ismember==true){
-                    addFavorite("1",aid);
-                    Log.v("grey",aid);
-                    showAletDialog();
-                }else {
-                   Intent intent = new Intent(context,LoginPage.class);
-                   startActivity(intent);
-                   ismember=true;
-
-                }
-
-            }
-        });
-
+//        loveadd.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (ismember==true){
+//                    addFavorite("1",aid);
+//                    Log.v("grey",aid);
+//                    showAletDialog();
+//                }else {
+//                   Intent intent = new Intent(context,LoginPage.class);
+//                   startActivity(intent);
+//                   ismember=true;
+//
+//                }
+//
+//            }
+//        });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.mes_toolbar_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.add_button:
+                if(ismember==false){
+                    addFavorite("1",aid);
+                    showAletDialog();
+                }else{
+                    Intent intent = new Intent(DetailActivity.this,LoginActivity.class);
+                    startActivity(intent);
+                    ismember=true;
+                }
+                break;
+            case R.id.mes_button:
+                Intent intent = new Intent(DetailActivity.this,MessagePage.class);
+                startActivity(intent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void showAletDialog(){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
