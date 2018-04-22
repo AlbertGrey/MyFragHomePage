@@ -1,9 +1,13 @@
 package tw.org.iii.myfraghomepage;
 
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +34,7 @@ public class LoginPage extends AppCompatActivity{
     private EditText loginaccount,loginpasswd;
     private Button loginbtn,newbtn;
     private String account,passwd;
+    private boolean ismember=false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,17 @@ public class LoginPage extends AppCompatActivity{
                 passwd = loginpasswd.getText().toString();
                 sighin(account, "",passwd,"1");
                 Log.v("grey",account+":"+passwd);
+                loginaccount.setText("");
+                loginpasswd.setText("");
+            }
+        });
+
+        newbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse("https://topic-timgyes123.c9users.io/phoneregister.html");
+                Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+                startActivity(intent);
             }
         });
     }
@@ -62,7 +78,18 @@ public class LoginPage extends AppCompatActivity{
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.v("chad",response);
+                        Log.v("grey","onResponse1 = "+response);
+                        String res = response;
+                        String error = "erro";
+                        if (res.equals(error)){
+                            Log.v("grey","error="+response);
+                            errortest();
+                        }else{
+                            Log.v("grey","error=qqqq");
+                            ismember=true;
+
+                        }
+
                     }
                 }, null){
             @Override
@@ -78,6 +105,18 @@ public class LoginPage extends AppCompatActivity{
 
 
         queue.add(stringRequest);
+    }
+
+    private void errortest(){
+        new AlertDialog.Builder(LoginPage.this)
+                .setTitle(" ")
+                .setMessage("輸入帳號或密碼錯誤")
+                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                }).show();
     }
 
 

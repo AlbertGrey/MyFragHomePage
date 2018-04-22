@@ -15,6 +15,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -42,11 +43,10 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_login);
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
-
-        setContentView(R.layout.activity_login);
+        queue= Volley.newRequestQueue(LoginActivity.this);
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -85,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                                     String name = object.getString("name");
                                     Log.v("grey",name+":"+email+":"+birthday);
                                     sighin(email,name,"123","2");
+                                    finish();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -134,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.v("chad",response);
+                        Log.v("grey","Responsea = "+response);
                     }
                 }, null){
             @Override

@@ -226,31 +226,7 @@ public class AttrPage extends ListFragment {
         public Button mesbtn;
         public Button addbtn;
     }
-//     //* @param mail        信箱 test123@gmail.com
-//     //* @param password    密碼 test123
-//
-//    private void sighin(String mail,String password){
-//        final String p1=mail="test123@gmail.com";
-//        final String p2=password="test123";
-//        String url ="http://36.235.38.228:8080/fsit04/sighin.jsp";
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        Log.v("chad",response);
-//                    }
-//                }, null){
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                HashMap<String,String> m1 =new HashMap<>();
-//                m1.put("mail",p1);
-//                m1.put("password", p2);
-//                return m1;
-//            }
-//        };
-//
-//        queue.add(stringRequest);
-//    }
+
 
 
     private void addFavorite(String user_id,String total_id){
@@ -263,7 +239,7 @@ public class AttrPage extends ListFragment {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.v("chad",response);
+                        Log.v("grey","attress = "+response);
                     }
                 }, null){
             @Override
