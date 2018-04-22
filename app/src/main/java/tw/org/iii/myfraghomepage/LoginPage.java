@@ -78,10 +78,9 @@ public class LoginPage extends AppCompatActivity{
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.v("grey","onResponse1 = "+response);
-                        String res = response;
-                        String error = "erro";
-                        if (res.equals(error)){
+                        Log.v("grey","00"+response.length());
+                        String res = response.trim();
+                        if (res.equals("erro")){
                             Log.v("grey","error="+response);
                             errortest();
                         }else{
