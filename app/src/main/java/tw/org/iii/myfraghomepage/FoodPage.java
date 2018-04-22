@@ -64,6 +64,7 @@ public class FoodPage extends ListFragment {
             JSONArray jsonArray = null;
             data = new LinkedList<>();
             jstring = JSONFuction.getJSONFromurl("http://36.235.38.228:8080/fsit04/restaruant");
+            Log.v("grey","jstringfood = "+jstring);
             try {
                 jsonArray = new JSONArray(jstring);
                 Log.v("grey","jason"+jsonArray);

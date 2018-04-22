@@ -2,27 +2,43 @@ package tw.org.iii.myfraghomepage;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 /**
@@ -32,6 +48,11 @@ import java.util.Map;
 public class SearchPage extends AppCompatActivity {
     private Toolbar toolbar;
     private RequestQueue queue;
+    private ListView listView;
+    private SearchAdapter adapter;
+    private LinkedList<AttrListModel> data;
+    private String jstring;
+    private SearchAsync searchAsync;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +62,9 @@ public class SearchPage extends AppCompatActivity {
         toolbar = findViewById(R.id.search_toolbar);
         toolbar.inflateMenu(R.menu.search_menu);
         setSupportActionBar(toolbar);
+        queue= Volley.newRequestQueue(SearchPage.this);
+        listView = findViewById(R.id.search_list);
+
 
     }
 
@@ -59,14 +83,15 @@ public class SearchPage extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.v("grey","submit = "+query);
                 doSearch(query);
+                Log.v("grey","submit = "+query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 Log.v("grey","change ="+newText);
+                doSearch(newText);
                 return false;
             }
         });
@@ -74,6 +99,8 @@ public class SearchPage extends AppCompatActivity {
 
         return true;
     }
+
+
 
     private void doSearch(String param) {
 
@@ -83,8 +110,8 @@ public class SearchPage extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        parseGetFavorite(response);
-
+                        new SearchAsync().execute(response);
+                        Log.v("grey","ressss = "+response);
                     }
                 }, null){
             @Override
@@ -92,9 +119,10 @@ public class SearchPage extends AppCompatActivity {
                 HashMap<String,String> m1 =new HashMap<>();
 
                 m1.put("param",p1);
-
-
+                Log.v("grey","param + "+m1);
                 return m1;
+
+
             }
         };
 
@@ -102,56 +130,131 @@ public class SearchPage extends AppCompatActivity {
         Log.v("grey","queue = "+stringRequest);
     }
 
-    private void parseGetFavorite(String response){
-        try {
-            JSONArray array1 = new JSONArray(response);
-            Log.v("chad",array1.length()+"");
-            for(int i= 0;i<array1.length();i++) {
-                JSONObject ob1 =array1.getJSONObject(i);
-                //地點ID
-                String total_id = ob1.getString("total_id");
-                Log.v("chad",total_id);
-                //地點名稱
-                String name = ob1.getString("name");
-                Log.v("chad",name);
-                //地點類型
-                String type= ob1.getString("type");
-                Log.v("chad",type);
-                //分類
-                String CAT2 = ob1.getString("CAT2");
-                Log.v("chad",CAT2);
-                //營業時間
-                String MEMO_TIME = ob1.getString("MEMO_TIME");
-                Log.v("chad",MEMO_TIME);
-                //地址
-                String address = ob1.getString("address");
-                Log.v("chad",address);
-                //簡介
-                String xbody = ob1.getString("xbody");
-                Log.v("chad",xbody);
-                //緯度
-                String lat = ob1.getString("lat");
-                Log.v("chad",lat);
-                //經度
-                String lng = ob1.getString("lng");
-                Log.v("chad",lng);
+    private class SearchAsync extends AsyncTask <String ,Void,LinkedList<AttrListModel>>{
 
+        @Override
+        protected LinkedList<AttrListModel> doInBackground(String... strings) {
+            String jstring = strings[0];
+            data = new LinkedList<>();
+            Log.v("grey","data = "+jstring);
+            try {
+                JSONArray jsonArray = new JSONArray(jstring);
+                Log.v("grey","jason"+jsonArray);
+                for(int i=0;i<jsonArray.length();i++){
+                    JSONObject jsonObject2 = jsonArray.getJSONObject(i);
+                    JSONArray imgarray = jsonObject2.getJSONArray("Img");
+                    JSONObject jsonObject3 = imgarray.getJSONObject(0);
 
-                JSONArray imgs =ob1.getJSONArray("Img");
-                for(int y= 0;y<imgs.length();y++){
-                    String description =imgs.getJSONObject(y).getString("description");
-                    Log.v("chad",description);
-                    String imgUrl = imgs.getJSONObject(y).getString("url");
-                    Log.v("chad",imgUrl);
+                    AttrListModel listModel = new AttrListModel();
+
+                    listModel.setAid(jsonObject2.getString("total_id"));
+                    listModel.setName(jsonObject2.getString("name"));
+                    listModel.setAddress(jsonObject2.getString("address"));
+                    listModel.setOpentime(jsonObject2.getString("MEMO_TIME"));
+                    listModel.setDescription(jsonObject2.getString("xbody"));
+                    listModel.setImgs(jsonObject3.getString("url"));
+                    data.add(listModel);
                 }
-
-
+                Log.v("grey","json = "+jsonArray);
+                Log.v("grey","data = "+data);
+                return data;
+            } catch (Exception e) {
+                Log.v("grey","error22 = " + e.toString());
             }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
+            return null;
         }
 
+        @Override
+        protected void onPostExecute(LinkedList jsonresult) {
+            super.onPostExecute(jsonresult);
+            Log.v("grey","jsonsearch = "+jsonresult);
+            adapter = new SearchAdapter(SearchPage.this,data);
+            listView.setAdapter(adapter);
+            Log.v("grey","data=="+data);
+
+        }
+    }
+
+    public class SearchAdapter extends BaseAdapter{
+
+        private Context context;
+        private LayoutInflater inflater;
+        private LinkedList<AttrListModel> data;
+        private AttrListModel reslut = new AttrListModel();
+        private TextView itemtitle;
+        private TextView itemaddr;
+
+        public SearchAdapter(Context context,
+                             LinkedList<AttrListModel> linklist){
+            this.context = context;
+            this.inflater = LayoutInflater.from(context);
+            this.data = linklist;
+        }
+
+        @Override
+        public int getCount() {
+            return data.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public View getView(final int i, View view, ViewGroup viewGroup) {
+            ViewHolder holder;
+            reslut = data.get(i);
+            if(view==null){
+                holder = new ViewHolder();
+                view = inflater.inflate(R.layout.item_layout,viewGroup,false);
+                inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                holder.itemtitle = (TextView)view.findViewById(R.id.item_title);
+                holder.itemaddress = (TextView)view.findViewById(R.id.item_addr);
+                holder.itemimage = (ImageView)view.findViewById(R.id.item_image);
+
+                view.setTag(holder);
+                Log.v("grey","resaid = "+reslut.getAid());
+            }else{
+                holder = (ViewHolder) view.getTag();
+            }
+            reslut = data.get(i);
+            //set reslut to textview
+            holder.itemtitle.setText(reslut.getName());
+            Log.v("grey","holdername = "+reslut.getName());
+            holder.itemaddress.setText(reslut.getAddress());
+            Log.v("grey","holderaddr = "+data.get(i).getAddress());
+            GlideApp.with(context).load(reslut.getImgs()).into(holder.itemimage);
+            Log.v("grey","data.image = "+data.get(i).getImgs());
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(SearchPage.this,DetailActivity.class);
+                    intent.putExtra("total_id",reslut.getAid());
+                    Log.v("grey","attid = "+reslut.getAid());
+                    intent.putExtra("name",reslut.getName());
+                    intent.putExtra("addr",reslut.getAddress());
+                    intent.putExtra("img",reslut.getImgs());
+                    intent.putExtra("description",reslut.getDescription());
+                    intent.putExtra("opentime",reslut.getOpentime());
+                    startActivity(intent);
+                }
+            });
+
+            return view;
+        }
+    }
+
+    static class ViewHolder
+    {
+        public TextView itemtitle;
+        public TextView itemaddress;
+        public ImageView itemimage;
     }
 
 

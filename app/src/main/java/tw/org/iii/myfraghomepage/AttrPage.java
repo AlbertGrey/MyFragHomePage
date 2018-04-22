@@ -71,6 +71,7 @@ public class AttrPage extends ListFragment {
             JSONArray jsonArray = null;
             data = new LinkedList<>();
             jstring = JSONFuction.getJSONFromurl("http://36.235.38.228:8080/J2EE/getData.jsp?start=1&rows=25");
+            Log.v("gery","jstringa = "+jstring);
             try {
                 jsonArray = new JSONArray(jstring);
                 Log.v("grey","jason"+jsonArray);
@@ -101,7 +102,7 @@ public class AttrPage extends ListFragment {
         protected void onPostExecute(LinkedList jsonresult) {
             super.onPostExecute(jsonresult);
             Log.v("grey","json22 = "+jsonresult);
-            adapter = new MylistAdapter(getContext(),data);
+            adapter = new MylistAdapter(getActivity(),data);
             setListAdapter(adapter);
             Log.v("grey","data=="+data);
 

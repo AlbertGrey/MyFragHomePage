@@ -118,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void newmember(View view) {
-        Uri uri = Uri.parse("https://www.google.com/");
+        Uri uri = Uri.parse("https://topic-timgyes123.c9users.io/phoneregister.html");
         Intent intent = new Intent(Intent.ACTION_VIEW,uri);
         startActivity(intent);
 
