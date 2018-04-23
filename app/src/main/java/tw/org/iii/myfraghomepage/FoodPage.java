@@ -179,7 +179,7 @@ public class FoodPage extends ListFragment {
             }else{
                 holder = (ViewHolder) view.getTag();
             }
-            reslut = data.get(position);
+//            reslut = data.get(position);
             //set reslut to textview
             holder.itemtitle.setText(reslut.getName());
             Log.v("grey","holdername = "+reslut.getName());
