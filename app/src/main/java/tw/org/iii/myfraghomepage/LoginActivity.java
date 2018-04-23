@@ -40,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     private RequestQueue queue;
-    public String urlip = "http://36.235.39.18:8080";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
         final String p2=password;
         final String p3=type;
         final String p4=name;
-        String url =urlip+"/fsit04/app/sighin";
+        String url =AttrPage.urlip+"/fsit04/app/sighin";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override

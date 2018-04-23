@@ -42,7 +42,7 @@ public class AttrPage extends ListFragment {
     private float screenWidth,screenHeight,newHeight;
     private boolean ismember ;
     private RequestQueue queue;
-    public String urlip = "http://36.235.39.18:8080";
+    public static String urlip = "http://36.235.39.18:8080";
 
 
     @Override
