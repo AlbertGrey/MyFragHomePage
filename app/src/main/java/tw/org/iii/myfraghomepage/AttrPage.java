@@ -191,7 +191,7 @@ public class AttrPage extends ListFragment {
                     }else {
                         Intent intent = new Intent(getActivity(),LoginActivity.class);
                         startActivity(intent);
-                        ismember=true;
+//                        ismember=true;
                     }
 
                 }
