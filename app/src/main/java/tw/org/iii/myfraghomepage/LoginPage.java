@@ -22,6 +22,11 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONStringer;
+
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +43,7 @@ public class LoginPage extends AppCompatActivity{
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private boolean issign;
+    private String memberid;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,7 +54,9 @@ public class LoginPage extends AppCompatActivity{
         sp = getSharedPreferences("memberdata",MODE_PRIVATE);
         editor = sp.edit();
         issign = sp.getBoolean("signin",true);
+        memberid = sp.getString("member","2");
         Log.v("grey","logicboolean = "+(issign?true:false));
+        Log.v("grey","memberidLogin ="+memberid);
 
         loginaccount = findViewById(R.id.login_account);
         loginpasswd = findViewById(R.id.login_passwd);
@@ -92,10 +100,19 @@ public class LoginPage extends AppCompatActivity{
                             Log.v("grey","error="+response);
                             errortest();
                         }else{
-                            Log.v("grey","success");
-                            editor.putBoolean("signin",true);
-                            editor.commit();
-                            Log.v("grey","logicbooleanpage = "+(issign?true:false));
+                            try {
+                                JSONObject j2 = new JSONObject(res);
+                                String mid = j2.getString("id");
+                                Log.v("grey","success");
+                                Log.v("grey","mid = "+mid);
+                                editor.putBoolean("signin",true);
+                                editor.putString("memberid",mid);
+                                editor.commit();
+                                Log.v("grey","logicbooleanpage = "+(issign?true:false));
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             finish();
 
                         }

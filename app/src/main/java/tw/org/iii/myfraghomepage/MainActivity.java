@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     public static SharedPreferences sp;
     public static SharedPreferences.Editor editor;
     public static boolean issignin;
+    public static String memberid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
 //        pager.setOffscreenPageLimit(5);
         inittablayout();
         editor.putBoolean("signin",false);
+        editor.putString("memberid","2");
         editor.commit();
         Log.v("grey","sign = "+(issignin?"true":"false"));
         //螢幕寬高
@@ -140,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
         sp = getSharedPreferences("memberdata",MODE_PRIVATE);
         editor = sp.edit();
         issignin = sp.getBoolean("signin",false);
+        memberid = sp.getString("memberid","1");
         Log.v("grey","issignin = "+(issignin?"true":"false"));
 
     }

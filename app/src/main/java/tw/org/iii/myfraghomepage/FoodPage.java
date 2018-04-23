@@ -184,10 +184,11 @@ public class FoodPage extends ListFragment {
                     MainActivity.issignin = MainActivity.sp.getBoolean("signin",true);
                     Log.v("grey","issighfood =="+MainActivity.issignin);
                     Log.v("grey","postion2 = "+position2);
+                    MainActivity.memberid = MainActivity.sp.getString("memberid","1");
                     if (MainActivity.issignin==true){
                         reslut = datas.get(position2);
                         Log.v("grey","click res= "+reslut);
-                        addFavorite("1",reslut.getAid());
+                        addFavorite(MainActivity.memberid,reslut.getAid());
                         Log.v("grey","onclock aid= "+reslut.getAid());
                         showAletDialog();
                     }else {

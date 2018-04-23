@@ -193,9 +193,11 @@ public class AttrPage extends ListFragment {
                 public void onClick(View view) {
                     MainActivity.issignin = MainActivity.sp.getBoolean("signin",true);
                     Log.v("grey","issighattrrrr =="+MainActivity.issignin);
+                    MainActivity.memberid = MainActivity.sp.getString("memberid","1");
+                    Log.v("grey","memberidAtt = "+MainActivity.memberid);
                     if (MainActivity.issignin==true){
                         reslut = datas.get(position);
-                        addFavorite("1",reslut.getAid());
+                        addFavorite(MainActivity.memberid,reslut.getAid());
                         Log.v("grey",reslut.getAid());
                         showAletDialog();
                     }else {

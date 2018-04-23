@@ -42,6 +42,7 @@ public class DetailActivity extends AppCompatActivity{
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private boolean issign;
+    private String memberid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +52,11 @@ public class DetailActivity extends AppCompatActivity{
         context = this;
         queue= Volley.newRequestQueue(this);
 
+        //member
         sp = getSharedPreferences("memberdata",MODE_PRIVATE);
         editor = sp.edit();
         issign = sp.getBoolean("signin",true);
+        memberid = sp.getString("memberid","2");
         Log.v("grey","detailsign = "+(issign?true:false));
 
         toolbar = findViewById(R.id.detail_toolbar);
@@ -98,7 +101,7 @@ public class DetailActivity extends AppCompatActivity{
         switch (item.getItemId()){
             case R.id.add_button:
                 if(issign==true){
-                    addFavorite("1",aid);
+                    addFavorite(memberid,aid);
                     Log.v("grey","aid"+aid);
                     showAletDialog();
                 }else{

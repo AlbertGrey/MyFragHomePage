@@ -60,6 +60,7 @@ public class SearchPage extends AppCompatActivity {
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private boolean issign;
+    private String memberid;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,9 +74,11 @@ public class SearchPage extends AppCompatActivity {
         queue= Volley.newRequestQueue(SearchPage.this);
         listView = findViewById(R.id.search_list);
 
+        //member
         sp = getSharedPreferences("memberdata",MODE_PRIVATE);
         editor = sp.edit();
         issign = sp.getBoolean("signin",true);
+        memberid = sp.getString("memberid","2");
         Log.v("grey","detailsign = "+(issign?true:false));
 
     }
@@ -267,7 +270,7 @@ public class SearchPage extends AppCompatActivity {
                 public void onClick(View view) {
                     if (issign==true){
                         reslut = datas.get(i);
-                        addFavorite("1",reslut.getAid());
+                        addFavorite(memberid,reslut.getAid());
                         Log.v("grey",reslut.getAid());
                         addtest();
                     }else {
