@@ -169,6 +169,7 @@ public class AttrPage extends ListFragment {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    reslut = data.get(position);
                     Intent intent = new Intent(getActivity(),DetailActivity.class);
                     intent.putExtra("total_id",reslut.getAid());
                     Log.v("grey","attid = "+reslut.getAid());

@@ -104,7 +104,7 @@ public class DetailActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.add_button:
-                if(ismember==false){
+                if(ismember==true){
                     addFavorite("1",aid);
                     showAletDialog();
                 }else{
