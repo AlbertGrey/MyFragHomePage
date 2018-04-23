@@ -104,11 +104,11 @@ public class FoodPage extends ListFragment {
 //            setListAdapter(adapter);
         }
     }
-    public class MyfoodlistAdapter extends BaseAdapter {
+    private class MyfoodlistAdapter extends BaseAdapter {
 
         private Context context;
         private LayoutInflater inflater;
-        private LinkedList<AttrListModel> data;
+        private LinkedList<AttrListModel> datas;
         private AttrListModel reslut = new AttrListModel();
         private TextView itemtitle;
         private TextView itemaddr;
@@ -117,13 +117,13 @@ public class FoodPage extends ListFragment {
         public MyfoodlistAdapter(Context context,
                                  LinkedList<AttrListModel> linklist) {
             this.context = context;
-            this.data = linklist;
+            this.datas= linklist;
             this.inflater = LayoutInflater.from(context);
         }
 
         @Override
         public int getCount() {
-            return data.size();
+            return datas.size();
         }
 
         @Override
@@ -137,8 +137,11 @@ public class FoodPage extends ListFragment {
         }
 
         @Override
-        public View getView(final int position, View view, ViewGroup viewGroup) {
+        public View getView(final int position2, View view, ViewGroup viewGroup) {
             ViewHolder holder;
+            reslut = datas.get(position2);
+            Log.v("grey","res==="+position2+"::"+reslut);
+            Log.v("grey","reslut get="+reslut);
             if(view==null){
                 holder = new ViewHolder();
                 view = inflater.inflate(R.layout.item_layout,viewGroup,false);
@@ -150,47 +153,20 @@ public class FoodPage extends ListFragment {
                 holder.mesbtn = view.findViewById(R.id.item_message_btn);
                 holder.addbtn = view.findViewById(R.id.item_add_btn);
                 Log.v("grey","resaid = "+reslut.getAid());
-                //addbtn
-                holder.addbtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (ismember==true){
-                            reslut = data.get(position);
-                            addFavorite("1",reslut.getAid());
-                            Log.v("grey",reslut.getAid());
-                            showAletDialog();
-                        }else {
-                            Intent intent = new Intent(getActivity(),LoginActivity.class);
-                            startActivity(intent);
-                            ismember=true;
-                        }
-
-                    }
-                });
-                //mesbtn
-                holder.mesbtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(),MessagePage.class);
-                        startActivity(intent);
-                    }
-                });
-
             }else{
                 holder = (ViewHolder) view.getTag();
             }
-//            reslut = data.get(position);
             //set reslut to textview
             holder.itemtitle.setText(reslut.getName());
             Log.v("grey","holdername = "+reslut.getName());
             holder.itemaddress.setText(reslut.getAddress());
-            Log.v("grey","holderaddr = "+data.get(position).getAddress());
+            Log.v("grey","holderaddr = "+datas.get(position2).getAddress());
             GlideApp.with(context).load(reslut.getImgs()).into(holder.itemimage);
-            Log.v("grey","data.image = "+data.get(position).getImgs());
+            Log.v("grey","data.image = "+datas.get(position2).getImgs());
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    reslut = data.get(position);
+                    reslut = datas.get(position2);
                     Intent intent = new Intent(getActivity(),DetailActivity.class);
                     intent.putExtra("total_id",reslut.getAid());
                     Log.v("grey","attid = "+reslut.getAid());
@@ -199,6 +175,34 @@ public class FoodPage extends ListFragment {
                     intent.putExtra("img",reslut.getImgs());
                     intent.putExtra("description",reslut.getDescription());
                     intent.putExtra("phone",reslut.getTel());
+                    startActivity(intent);
+                }
+            });
+            //addbtn
+            holder.addbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Log.v("grey","postion2 = "+position2);
+                    if (ismember==true){
+                        reslut = datas.get(position2);
+                        Log.v("grey","click res= "+reslut);
+                        addFavorite("1",reslut.getAid());
+                        Log.v("grey","onclock aid= "+reslut.getAid());
+                        showAletDialog();
+                    }else {
+                        Intent intent = new Intent(getActivity(),LoginActivity.class);
+                        startActivity(intent);
+                        ismember=true;
+                    }
+
+                }
+            });
+            //mesbtn
+            holder.mesbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(),MessagePage.class);
                     startActivity(intent);
                 }
             });
@@ -212,6 +216,7 @@ public class FoodPage extends ListFragment {
     private void showAletDialog(){
         DialogFragment newFragment = AlertDialogFragment.newInstance(1);
         newFragment.show(getFragmentManager(), "dialog");
+
     }
 
     static class ViewHolder
@@ -222,31 +227,6 @@ public class FoodPage extends ListFragment {
         public Button mesbtn;
         public Button addbtn;
     }
-//     //* @param mail        信箱 test123@gmail.com
-//     //* @param password    密碼 test123
-//
-//    private void sighin(String mail,String password){
-//        final String p1=mail="test123@gmail.com";
-//        final String p2=password="test123";
-//        String url ="http://36.235.38.228:8080/fsit04/sighin.jsp";
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        Log.v("chad",response);
-//                    }
-//                }, null){
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                HashMap<String,String> m1 =new HashMap<>();
-//                m1.put("mail",p1);
-//                m1.put("password", p2);
-//                return m1;
-//            }
-//        };
-//
-//        queue.add(stringRequest);
-//    }
 
 
     private void addFavorite(String user_id,String total_id){
@@ -260,7 +240,7 @@ public class FoodPage extends ListFragment {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.v("chad",response);
+                        Log.v("grey","resss="+response);
                     }
                 }, null){
             @Override

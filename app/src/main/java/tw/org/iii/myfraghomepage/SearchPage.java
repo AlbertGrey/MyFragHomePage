@@ -2,10 +2,13 @@ package tw.org.iii.myfraghomepage;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -53,6 +56,7 @@ public class SearchPage extends AppCompatActivity {
     private LinkedList<AttrListModel> data;
     private String jstring;
     private SearchAsync searchAsync;
+    private boolean ismember ;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -179,7 +183,7 @@ public class SearchPage extends AppCompatActivity {
 
         private Context context;
         private LayoutInflater inflater;
-        private LinkedList<AttrListModel> data;
+        private LinkedList<AttrListModel> datas;
         private AttrListModel reslut = new AttrListModel();
         private TextView itemtitle;
         private TextView itemaddr;
@@ -188,7 +192,7 @@ public class SearchPage extends AppCompatActivity {
                              LinkedList<AttrListModel> linklist){
             this.context = context;
             this.inflater = LayoutInflater.from(context);
-            this.data = linklist;
+            this.datas = linklist;
         }
 
         @Override
@@ -209,7 +213,7 @@ public class SearchPage extends AppCompatActivity {
         @Override
         public View getView(final int i, View view, ViewGroup viewGroup) {
             ViewHolder holder;
-            reslut = data.get(i);
+            reslut = datas.get(i);
             if(view==null){
                 holder = new ViewHolder();
                 view = inflater.inflate(R.layout.item_layout,viewGroup,false);
@@ -218,12 +222,15 @@ public class SearchPage extends AppCompatActivity {
                 holder.itemaddress = (TextView)view.findViewById(R.id.item_addr);
                 holder.itemimage = (ImageView)view.findViewById(R.id.item_image);
 
+
                 view.setTag(holder);
+                holder.mesbtn = view.findViewById(R.id.item_message_btn);
+                holder.addbtn = view.findViewById(R.id.item_add_btn);
                 Log.v("grey","resaid = "+reslut.getAid());
             }else{
                 holder = (ViewHolder) view.getTag();
             }
-            reslut = data.get(i);
+            reslut = datas.get(i);
             //set reslut to textview
             holder.itemtitle.setText(reslut.getName());
             Log.v("grey","holdername = "+reslut.getName());
@@ -234,6 +241,7 @@ public class SearchPage extends AppCompatActivity {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    reslut = datas.get(i);
                     Intent intent = new Intent(SearchPage.this,DetailActivity.class);
                     intent.putExtra("total_id",reslut.getAid());
                     Log.v("grey","attid = "+reslut.getAid());
@@ -242,6 +250,32 @@ public class SearchPage extends AppCompatActivity {
                     intent.putExtra("img",reslut.getImgs());
                     intent.putExtra("description",reslut.getDescription());
                     intent.putExtra("opentime",reslut.getOpentime());
+                    startActivity(intent);
+                }
+            });
+            //addbtn
+            holder.addbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (ismember==true){
+                        reslut = datas.get(i);
+                        addFavorite("1",reslut.getAid());
+                        Log.v("grey",reslut.getAid());
+                        addtest();
+                    }else {
+                        Intent intent = new Intent(SearchPage.this,LoginActivity.class);
+                        startActivity(intent);
+                        ismember=true;
+                    }
+
+                }
+            });
+            //mesbtn
+            holder.mesbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent intent = new Intent(SearchPage.this,MessagePage.class);
                     startActivity(intent);
                 }
             });
@@ -255,7 +289,47 @@ public class SearchPage extends AppCompatActivity {
         public TextView itemtitle;
         public TextView itemaddress;
         public ImageView itemimage;
+        public Button mesbtn;
+        public Button addbtn;
     }
 
+
+    private void addtest(){
+        new AlertDialog.Builder(SearchPage.this)
+                .setTitle(" ")
+                .setMessage("成功")
+                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                }).show();
+    }
+
+    private void addFavorite(String user_id,String total_id){
+        String url =AttrPage.urlip+"/fsit04/User_favorite";
+        Log.v("grey","user_id = "+ user_id);
+        Log.v("grey","total_id="+total_id);
+        final String p1 =user_id;
+        final String p2=total_id;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.v("grey","attress = "+response);
+                    }
+                }, null){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> m1 =new HashMap<>();
+                m1.put("user_id",p1);
+                m1.put("total_id", p2);
+                return m1;
+            }
+        };
+        queue.add(stringRequest);
+
+    }
 
 }

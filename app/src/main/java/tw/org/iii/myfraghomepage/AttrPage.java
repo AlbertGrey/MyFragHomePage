@@ -107,11 +107,11 @@ public class AttrPage extends ListFragment {
 
         }
     }
-    public class MylistAdapter extends BaseAdapter {
+    private class MylistAdapter extends BaseAdapter {
 
         private Context context;
         private LayoutInflater inflater;
-        private LinkedList<AttrListModel> data;
+        private LinkedList<AttrListModel> datas;
         private AttrListModel reslut = new AttrListModel();
         private TextView itemtitle;
         private TextView itemaddr;
@@ -120,13 +120,13 @@ public class AttrPage extends ListFragment {
         public MylistAdapter(Context context,
                              LinkedList<AttrListModel> linklist) {
             this.context = context;
-            this.data = linklist;
+            this.datas = linklist;
             this.inflater = LayoutInflater.from(context);
         }
 
         @Override
         public int getCount() {
-            return data.size();
+            return datas.size();
         }
 
         @Override
@@ -142,7 +142,7 @@ public class AttrPage extends ListFragment {
         @Override
         public View getView(final int position, View view, ViewGroup viewGroup) {
             ViewHolder holder;
-            reslut = data.get(position);
+            reslut = datas.get(position);
             if(view==null){
                 holder = new ViewHolder();
                 view = inflater.inflate(R.layout.item_layout,viewGroup,false);
@@ -158,18 +158,17 @@ public class AttrPage extends ListFragment {
             }else{
                 holder = (ViewHolder) view.getTag();
             }
-//            reslut = data.get(position);
             //set reslut to textview
             holder.itemtitle.setText(reslut.getName());
             Log.v("grey","holdername = "+reslut.getName());
             holder.itemaddress.setText(reslut.getAddress());
-            Log.v("grey","holderaddr = "+data.get(position).getAddress());
+            Log.v("grey","holderaddr = "+datas.get(position).getAddress());
             GlideApp.with(context).load(reslut.getImgs()).into(holder.itemimage);
-            Log.v("grey","data.image = "+data.get(position).getImgs());
+            Log.v("grey","data.image = "+datas.get(position).getImgs());
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    reslut = data.get(position);
+                    reslut = datas.get(position);
                     Intent intent = new Intent(getActivity(),DetailActivity.class);
                     intent.putExtra("total_id",reslut.getAid());
                     Log.v("grey","attid = "+reslut.getAid());
@@ -186,7 +185,7 @@ public class AttrPage extends ListFragment {
                 @Override
                 public void onClick(View view) {
                     if (ismember==true){
-                        reslut = data.get(position);
+                        reslut = datas.get(position);
                         addFavorite("1",reslut.getAid());
                         Log.v("grey",reslut.getAid());
                         showAletDialog();
@@ -256,10 +255,4 @@ public class AttrPage extends ListFragment {
 
     }
 
-    private boolean ismember(){
-
-
-
-        return false;
-    }
 }

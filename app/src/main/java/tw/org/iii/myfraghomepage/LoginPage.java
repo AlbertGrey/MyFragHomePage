@@ -84,7 +84,6 @@ public class LoginPage extends AppCompatActivity{
                             Log.v("grey","error="+response);
                             errortest();
                         }else{
-
                             Log.v("grey","success");
                             ismember=true;
 

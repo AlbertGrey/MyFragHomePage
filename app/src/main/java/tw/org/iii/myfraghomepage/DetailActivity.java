@@ -111,7 +111,7 @@ public class DetailActivity extends AppCompatActivity{
                 }else{
                     Intent intent = new Intent(DetailActivity.this,LoginActivity.class);
                     startActivity(intent);
-//                    ismember=true;
+                    ismember=true;
                 }
                 break;
             case R.id.mes_button:
