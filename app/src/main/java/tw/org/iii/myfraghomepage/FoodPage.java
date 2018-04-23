@@ -63,7 +63,7 @@ public class FoodPage extends ListFragment {
         protected LinkedList<AttrListModel> doInBackground(String... strings) {
             JSONArray jsonArray = null;
             data = new LinkedList<>();
-            jstring = JSONFuction.getJSONFromurl("http://36.235.38.228:8080/fsit04/restaruant");
+            jstring = JSONFuction.getJSONFromurl("http://36.235.39.18:8080/fsit04/restaruant");
             Log.v("grey","jstringfood = "+jstring);
             try {
                 jsonArray = new JSONArray(jstring);

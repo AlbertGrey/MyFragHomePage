@@ -105,7 +105,7 @@ public class SearchPage extends AppCompatActivity {
     private void doSearch(String param) {
 
         final String p1 =param;
-        String url = String.format("http://36.235.38.228:8080/fsit04/Allviews");
+        String url = String.format("http://36.235.39.18:8080/fsit04/Allviews");
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override

@@ -70,7 +70,7 @@ public class AttrPage extends ListFragment {
         protected LinkedList<AttrListModel> doInBackground(String... strings) {
             JSONArray jsonArray = null;
             data = new LinkedList<>();
-            jstring = JSONFuction.getJSONFromurl("http://36.235.38.228:8080/J2EE/getData.jsp?start=1&rows=25");
+            jstring = JSONFuction.getJSONFromurl("http://36.235.39.18:8080/fsit04/getData");
             Log.v("gery","jstringa = "+jstring);
             try {
                 jsonArray = new JSONArray(jstring);
