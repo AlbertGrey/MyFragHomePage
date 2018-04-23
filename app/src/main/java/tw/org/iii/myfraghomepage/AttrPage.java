@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,6 +42,7 @@ public class AttrPage extends ListFragment {
     private float screenWidth,screenHeight,newHeight;
     private boolean ismember ;
     private RequestQueue queue;
+    public String urlip = "http://36.235.39.18:8080";
 
 
     @Override
@@ -70,7 +69,7 @@ public class AttrPage extends ListFragment {
         protected LinkedList<AttrListModel> doInBackground(String... strings) {
             JSONArray jsonArray = null;
             data = new LinkedList<>();
-            jstring = JSONFuction.getJSONFromurl("http://36.235.39.18:8080/fsit04/getData");
+            jstring = JSONFuction.getJSONFromurl(urlip+"/fsit04/getData");
             Log.v("gery","jstringa = "+jstring);
             try {
                 jsonArray = new JSONArray(jstring);
@@ -230,7 +229,7 @@ public class AttrPage extends ListFragment {
 
 
     private void addFavorite(String user_id,String total_id){
-        String url ="http://36.235.38.228:8080/fsit04/User_favorite";
+        String url =urlip+"/fsit04/User_favorite";
 
         final String p1 =user_id;
         final String p2=total_id;

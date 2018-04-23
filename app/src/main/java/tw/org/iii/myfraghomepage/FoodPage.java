@@ -45,6 +45,7 @@ public class FoodPage extends ListFragment {
     private float screenWidth,screenHeight,newHeight;
     private boolean ismember = false;
     private RequestQueue queue;
+    public String urlip = "http://36.235.39.18:8080";
 
 
     @Override
@@ -63,7 +64,7 @@ public class FoodPage extends ListFragment {
         protected LinkedList<AttrListModel> doInBackground(String... strings) {
             JSONArray jsonArray = null;
             data = new LinkedList<>();
-            jstring = JSONFuction.getJSONFromurl("http://36.235.39.18:8080/fsit04/restaruant");
+            jstring = JSONFuction.getJSONFromurl(urlip+"/fsit04/restaruant");
             Log.v("grey","jstringfood = "+jstring);
             try {
                 jsonArray = new JSONArray(jstring);
@@ -249,7 +250,7 @@ public class FoodPage extends ListFragment {
 
 
     private void addFavorite(String user_id,String total_id){
-        String url ="http://36.235.38.228:8080/J2EE/addFavorite.jsp";
+        String url =urlip+"/fsit04/User_favorite";
 
         final String p1 =user_id;
         final String p2=total_id;
