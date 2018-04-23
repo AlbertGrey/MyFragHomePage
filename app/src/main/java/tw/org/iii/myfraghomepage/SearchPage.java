@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -56,7 +57,9 @@ public class SearchPage extends AppCompatActivity {
     private LinkedList<AttrListModel> data;
     private String jstring;
     private SearchAsync searchAsync;
-    private boolean ismember ;
+    private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
+    private boolean issign;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,10 +68,15 @@ public class SearchPage extends AppCompatActivity {
 
         toolbar = findViewById(R.id.search_toolbar);
         toolbar.inflateMenu(R.menu.search_menu);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
         queue= Volley.newRequestQueue(SearchPage.this);
         listView = findViewById(R.id.search_list);
 
+        sp = getSharedPreferences("memberdata",MODE_PRIVATE);
+        editor = sp.edit();
+        issign = sp.getBoolean("signin",true);
+        Log.v("grey","detailsign = "+(issign?true:false));
 
     }
 
@@ -257,7 +265,7 @@ public class SearchPage extends AppCompatActivity {
             holder.addbtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (ismember==true){
+                    if (issign==true){
                         reslut = datas.get(i);
                         addFavorite("1",reslut.getAid());
                         Log.v("grey",reslut.getAid());
@@ -265,7 +273,6 @@ public class SearchPage extends AppCompatActivity {
                     }else {
                         Intent intent = new Intent(SearchPage.this,LoginActivity.class);
                         startActivity(intent);
-                        ismember=true;
                     }
 
                 }
@@ -301,7 +308,7 @@ public class SearchPage extends AppCompatActivity {
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
+//                        finish();
                     }
                 }).show();
     }

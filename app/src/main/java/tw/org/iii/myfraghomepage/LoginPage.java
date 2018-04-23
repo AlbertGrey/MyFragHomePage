@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -34,13 +35,20 @@ public class LoginPage extends AppCompatActivity{
     private EditText loginaccount,loginpasswd;
     private Button loginbtn,newbtn;
     private String account,passwd;
-    private boolean ismember=false;
+    private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
+    private boolean issign;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
         queue= Volley.newRequestQueue(this);
+
+        sp = getSharedPreferences("memberdata",MODE_PRIVATE);
+        editor = sp.edit();
+        issign = sp.getBoolean("signin",true);
+        Log.v("grey","logicboolean = "+(issign?true:false));
 
         loginaccount = findViewById(R.id.login_account);
         loginpasswd = findViewById(R.id.login_passwd);
@@ -85,7 +93,10 @@ public class LoginPage extends AppCompatActivity{
                             errortest();
                         }else{
                             Log.v("grey","success");
-                            ismember=true;
+                            editor.putBoolean("signin",true);
+                            editor.commit();
+                            Log.v("grey","logicbooleanpage = "+(issign?true:false));
+                            finish();
 
                         }
 

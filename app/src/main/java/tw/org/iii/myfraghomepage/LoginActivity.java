@@ -1,6 +1,7 @@
 package tw.org.iii.myfraghomepage;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -41,6 +42,9 @@ public class LoginActivity extends AppCompatActivity {
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     private RequestQueue queue;
+    private  SharedPreferences sp;
+    private SharedPreferences.Editor editor;
+    private boolean issign;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +53,10 @@ public class LoginActivity extends AppCompatActivity {
         AppEventsLogger.activateApp(this);
         queue= Volley.newRequestQueue(LoginActivity.this);
 
+        sp = getSharedPreferences("memberdata",MODE_PRIVATE);
+        editor = sp.edit();
+        issign = sp.getBoolean("signin",true);
+        Log.v("grey","logicboolean = "+(issign?true:false));
         callbackManager = CallbackManager.Factory.create();
 
         loginbtn = findViewById(R.id.login_button2);
@@ -86,6 +94,9 @@ public class LoginActivity extends AppCompatActivity {
                                     String name = object.getString("name");
                                     Log.v("grey",name+":"+email+":"+birthday);
                                     sighin(email,name,"123","2");
+                                    editor.putBoolean("signin",true);
+                                    editor.commit();
+                                    Log.v("grey","logicboolean = "+(issign?true:false));
                                     finish();
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -107,23 +118,23 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        LoginManager.getInstance().registerCallback(callbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        // App code
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        // App code
-                    }
-
-                    @Override
-                    public void onError(FacebookException exception) {
-                        // App code
-                    }
-                });
+//        LoginManager.getInstance().registerCallback(callbackManager,
+//                new FacebookCallback<LoginResult>() {
+//                    @Override
+//                    public void onSuccess(LoginResult loginResult) {
+//                        // App code
+//                    }
+//
+//                    @Override
+//                    public void onCancel() {
+//                        // App code
+//                    }
+//
+//                    @Override
+//                    public void onError(FacebookException exception) {
+//                        // App code
+//                    }
+//                });
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -139,7 +150,12 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void sighin(String mail,String name,String password,String type){
+    @Override
+    public void finish() {
+        super.finish();
+    }
+
+    private void sighin(String mail, String name, String password, String type){
         final String p1=mail;
         final String p2=password;
         final String p3=type;

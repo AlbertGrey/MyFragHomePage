@@ -3,6 +3,7 @@ package tw.org.iii.myfraghomepage;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -38,6 +39,9 @@ public class DetailActivity extends AppCompatActivity{
     private Context context;
 
     private Toolbar toolbar;
+    private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
+    private boolean issign;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,11 @@ public class DetailActivity extends AppCompatActivity{
 
         context = this;
         queue= Volley.newRequestQueue(this);
+
+        sp = getSharedPreferences("memberdata",MODE_PRIVATE);
+        editor = sp.edit();
+        issign = sp.getBoolean("signin",true);
+        Log.v("grey","detailsign = "+(issign?true:false));
 
         toolbar = findViewById(R.id.detail_toolbar);
         toolbar.inflateMenu(R.menu.mes_toolbar_menu);
@@ -76,22 +85,6 @@ public class DetailActivity extends AppCompatActivity{
         Log.v("grey","aid = "+aid);
         Log.v("grey","name = ?"+name);
 
-//        loveadd.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (ismember==true){
-//                    addFavorite("1",aid);
-//                    Log.v("grey",aid);
-//                    showAletDialog();
-//                }else {
-//                   Intent intent = new Intent(context,LoginPage.class);
-//                   startActivity(intent);
-//                   ismember=true;
-//
-//                }
-//
-//            }
-//        });
     }
 
     @Override
@@ -104,14 +97,14 @@ public class DetailActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.add_button:
-                if(ismember==true){
+                if(issign==true){
                     addFavorite("1",aid);
                     Log.v("grey","aid"+aid);
                     showAletDialog();
                 }else{
                     Intent intent = new Intent(DetailActivity.this,LoginActivity.class);
                     startActivity(intent);
-                    ismember=true;
+
                 }
                 break;
             case R.id.mes_button:

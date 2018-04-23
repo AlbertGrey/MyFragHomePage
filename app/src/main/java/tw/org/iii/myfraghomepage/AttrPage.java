@@ -3,8 +3,10 @@ package tw.org.iii.myfraghomepage;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -40,10 +42,14 @@ public class AttrPage extends ListFragment {
     private MylistAdapter adapter;
     private Button mesbtn,addbtn;
     private float screenWidth,screenHeight,newHeight;
-    private boolean ismember ;
     private RequestQueue queue;
     public static String urlip = "http://36.235.39.18:8080";
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.v("grey","attsign="+MainActivity.issignin);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,6 +77,7 @@ public class AttrPage extends ListFragment {
             data = new LinkedList<>();
             jstring = JSONFuction.getJSONFromurl(urlip+"/fsit04/getData");
             Log.v("gery","jstringa = "+jstring);
+
             try {
                 jsonArray = new JSONArray(jstring);
                 Log.v("grey","jason"+jsonArray);
@@ -184,7 +191,9 @@ public class AttrPage extends ListFragment {
             holder.addbtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (ismember==true){
+                    MainActivity.issignin = MainActivity.sp.getBoolean("signin",true);
+                    Log.v("grey","issighattrrrr =="+MainActivity.issignin);
+                    if (MainActivity.issignin==true){
                         reslut = datas.get(position);
                         addFavorite("1",reslut.getAid());
                         Log.v("grey",reslut.getAid());
@@ -192,7 +201,6 @@ public class AttrPage extends ListFragment {
                     }else {
                         Intent intent = new Intent(getActivity(),LoginActivity.class);
                         startActivity(intent);
-                        ismember=true;
                     }
 
                 }

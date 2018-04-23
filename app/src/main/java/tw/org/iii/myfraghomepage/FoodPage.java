@@ -43,7 +43,6 @@ public class FoodPage extends ListFragment {
     private MyfoodlistAdapter adapter;
     private Button mesbtn,addbtn;
     private float screenWidth,screenHeight,newHeight;
-    private boolean ismember = false;
     private RequestQueue queue;
 
 
@@ -182,9 +181,10 @@ public class FoodPage extends ListFragment {
             holder.addbtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    MainActivity.issignin = MainActivity.sp.getBoolean("signin",true);
+                    Log.v("grey","issighfood =="+MainActivity.issignin);
                     Log.v("grey","postion2 = "+position2);
-                    if (ismember==true){
+                    if (MainActivity.issignin==true){
                         reslut = datas.get(position2);
                         Log.v("grey","click res= "+reslut);
                         addFavorite("1",reslut.getAid());
@@ -193,7 +193,6 @@ public class FoodPage extends ListFragment {
                     }else {
                         Intent intent = new Intent(getActivity(),LoginActivity.class);
                         startActivity(intent);
-                        ismember=true;
                     }
 
                 }
