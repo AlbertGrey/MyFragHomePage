@@ -155,13 +155,14 @@ public class FoodPage extends ListFragment {
                     @Override
                     public void onClick(View view) {
                         if (ismember==true){
+                            reslut = data.get(position);
                             addFavorite("1",reslut.getAid());
                             Log.v("grey",reslut.getAid());
                             showAletDialog();
                         }else {
                             Intent intent = new Intent(getActivity(),LoginActivity.class);
                             startActivity(intent);
-//                            ismember=true;
+                            ismember=true;
                         }
 
                     }
@@ -250,7 +251,8 @@ public class FoodPage extends ListFragment {
 
     private void addFavorite(String user_id,String total_id){
         String url =AttrPage.urlip+"/fsit04/User_favorite";
-
+        Log.v("grey","user_id2 = "+ user_id);
+        Log.v("grey","total_id2="+total_id);
         final String p1 =user_id;
         final String p2=total_id;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,

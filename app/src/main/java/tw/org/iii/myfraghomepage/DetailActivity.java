@@ -106,6 +106,7 @@ public class DetailActivity extends AppCompatActivity{
             case R.id.add_button:
                 if(ismember==true){
                     addFavorite("1",aid);
+                    Log.v("grey","aid"+aid);
                     showAletDialog();
                 }else{
                     Intent intent = new Intent(DetailActivity.this,LoginActivity.class);

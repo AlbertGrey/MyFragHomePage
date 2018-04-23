@@ -158,7 +158,7 @@ public class AttrPage extends ListFragment {
             }else{
                 holder = (ViewHolder) view.getTag();
             }
-            reslut = data.get(position);
+//            reslut = data.get(position);
             //set reslut to textview
             holder.itemtitle.setText(reslut.getName());
             Log.v("grey","holdername = "+reslut.getName());
@@ -186,13 +186,14 @@ public class AttrPage extends ListFragment {
                 @Override
                 public void onClick(View view) {
                     if (ismember==true){
+                        reslut = data.get(position);
                         addFavorite("1",reslut.getAid());
                         Log.v("grey",reslut.getAid());
                         showAletDialog();
                     }else {
                         Intent intent = new Intent(getActivity(),LoginActivity.class);
                         startActivity(intent);
-//                        ismember=true;
+                        ismember=true;
                     }
 
                 }
@@ -231,7 +232,8 @@ public class AttrPage extends ListFragment {
 
     private void addFavorite(String user_id,String total_id){
         String url =urlip+"/fsit04/User_favorite";
-
+        Log.v("grey","user_id = "+ user_id);
+        Log.v("grey","total_id="+total_id);
         final String p1 =user_id;
         final String p2=total_id;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,

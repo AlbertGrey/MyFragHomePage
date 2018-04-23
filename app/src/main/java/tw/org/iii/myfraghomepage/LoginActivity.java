@@ -24,6 +24,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -89,7 +90,6 @@ public class LoginActivity extends AppCompatActivity {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-
                             }
                         });
                 Bundle params = new Bundle();
@@ -97,26 +97,40 @@ public class LoginActivity extends AppCompatActivity {
                 request.setParameters(params);
                 request.executeAsync();
             }
-
             @Override
             public void onCancel() {
                 // App code
             }
-
             @Override
             public void onError(FacebookException exception) {
                 // App code
             }
         });
 
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        // App code
+                    }
 
+                    @Override
+                    public void onCancel() {
+                        // App code
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        // App code
+                    }
+                });
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
+    //
 
     public void newmember(View view) {
         Uri uri = Uri.parse("https://topic-timgyes123.c9users.io/phoneregister.html");

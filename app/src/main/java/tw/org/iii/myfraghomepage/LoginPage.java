@@ -78,12 +78,13 @@ public class LoginPage extends AppCompatActivity{
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.v("grey","00"+response.length());
+                        Log.v("grey",response);
                         String res = response.trim();
                         if (res.equals("erro")){
                             Log.v("grey","error="+response);
                             errortest();
                         }else{
+
                             Log.v("grey","success");
                             ismember=true;
 
