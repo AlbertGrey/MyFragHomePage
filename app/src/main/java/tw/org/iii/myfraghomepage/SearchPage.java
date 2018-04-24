@@ -79,7 +79,7 @@ public class SearchPage extends AppCompatActivity {
         sp = getSharedPreferences("memberdata",MODE_PRIVATE);
         editor = sp.edit();
         issign = sp.getBoolean("signin",true);
-        memberid = sp.getString("memberid","2");
+        memberid = sp.getString("memberid","0");
         Log.v("grey","detailsign = "+(issign?true:false));
 
     }

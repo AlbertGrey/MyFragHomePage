@@ -15,7 +15,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,7 +27,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".DetailActivity" />
-        <activity android:name=".LoginPage" />
+        <activity android:name=".LoginPage"
+            android:launchMode="singleTop"/>
         <activity android:name=".MessagePage"/>
 
         <meta-data
@@ -52,7 +54,7 @@
 
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            ></activity>
 
         <activity android:name=".SearchPage"
             android:launchMode="singleTop">

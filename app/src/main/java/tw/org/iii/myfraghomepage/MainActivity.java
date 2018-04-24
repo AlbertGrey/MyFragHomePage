@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 //        pager.setOffscreenPageLimit(5);
         inittablayout();
         editor.putBoolean("signin",false);
-        editor.putString("memberid","2");
+        editor.putString("memberid","0");
         editor.commit();
         Log.v("grey","sign = "+(issignin?"true":"false"));
         //螢幕寬高

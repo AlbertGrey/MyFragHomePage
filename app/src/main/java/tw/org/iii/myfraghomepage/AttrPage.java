@@ -200,6 +200,7 @@ public class AttrPage extends ListFragment {
                         reslut = datas.get(position);
                         addFavorite(MainActivity.memberid,reslut.getAid());
                         Log.v("grey",reslut.getAid());
+                        getFavorite(reslut.getAid());
                         showAletDialog();
                     }else {
                         Intent intent = new Intent(getActivity(),LoginActivity.class);
@@ -264,6 +265,21 @@ public class AttrPage extends ListFragment {
         };
         queue.add(stringRequest);
 
+    }
+
+    private void getFavorite(String user_id){
+        final String p1=user_id;
+        String url =urlip+"/fsit04/User_favorite?user_id="+p1;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.v("grey","attgetfav = "+response);
+
+                    }
+                }, null);
+
+        queue.add(stringRequest);
     }
 
 }

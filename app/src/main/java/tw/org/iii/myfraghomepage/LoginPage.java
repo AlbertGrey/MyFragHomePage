@@ -54,7 +54,7 @@ public class LoginPage extends AppCompatActivity{
         sp = getSharedPreferences("memberdata",MODE_PRIVATE);
         editor = sp.edit();
         issign = sp.getBoolean("signin",true);
-        memberid = sp.getString("member","2");
+        memberid = sp.getString("member","0");
         Log.v("grey","logicboolean = "+(issign?true:false));
         Log.v("grey","memberidLogin ="+memberid);
 
@@ -68,7 +68,7 @@ public class LoginPage extends AppCompatActivity{
             public void onClick(View view) {
                 account = loginaccount.getText().toString();
                 passwd = loginpasswd.getText().toString();
-                sighin(account, "",passwd,"1");
+                sighin(account, "",passwd,"normal");
                 Log.v("grey",account+":"+passwd);
                 loginaccount.setText("");
                 loginpasswd.setText("");
@@ -109,11 +109,13 @@ public class LoginPage extends AppCompatActivity{
                                 editor.putString("memberid",mid);
                                 editor.commit();
                                 Log.v("grey","logicbooleanpage = "+(issign?true:false));
-
+                                Intent intent =new Intent(getApplicationContext(),MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            finish();
+
 
                         }
 

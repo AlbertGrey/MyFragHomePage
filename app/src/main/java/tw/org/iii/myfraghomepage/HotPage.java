@@ -60,21 +60,21 @@ public class HotPage extends ListFragment {
         protected LinkedList<AttrListModel> doInBackground(String... strings) {
             JSONArray jsonArray = null;
             data = new LinkedList<>();
-            jstring = JSONFuction.getJSONFromurl(AttrPage.urlip+"/fsit04/getData");
-            Log.v("gery","jstringa = "+jstring);
+            jstring = JSONFuction.getJSONFromurl("http://36.235.39.18:8080/fsit04/User_favorite?user_id=3");
+            Log.v("gery","jstringhot= "+jstring);
 
             try {
                 jsonArray = new JSONArray(jstring);
-                Log.v("grey","jason"+jsonArray);
+                Log.v("grey","jasonhot"+jsonArray);
                 for(int i=0;i<jsonArray.length();i++){
                     JSONObject jsonObject2 = jsonArray.getJSONObject(i);
-                    JSONArray imgarray = jsonObject2.getJSONArray("imgs");
+                    JSONArray imgarray = jsonObject2.getJSONArray("Img");
                     JSONObject jsonObject3 = imgarray.getJSONObject(0);
 
                     AttrListModel listModel = new AttrListModel();
 
                     listModel.setAid(jsonObject2.getString("total_id"));
-                    listModel.setName(jsonObject2.getString("stitle"));
+                    listModel.setName(jsonObject2.getString("name"));
                     listModel.setAddress(jsonObject2.getString("address"));
                     listModel.setOpentime(jsonObject2.getString("MEMO_TIME"));
                     listModel.setDescription(jsonObject2.getString("xbody"));

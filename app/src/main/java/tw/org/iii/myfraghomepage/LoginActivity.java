@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                                     String birthday = object.getString("birthday");
                                     String name = object.getString("name");
                                     Log.v("grey",name+":"+email+":"+birthday);
-                                    sighin(email,name,"123","2");
+                                    sighin(email,name,"123","fb");
                                     editor.putBoolean("signin",true);
                                     editor.commit();
                                     Log.v("grey","logicboolean = "+(issign?true:false));
