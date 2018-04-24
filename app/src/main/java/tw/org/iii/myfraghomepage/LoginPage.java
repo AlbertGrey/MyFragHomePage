@@ -146,5 +146,8 @@ public class LoginPage extends AppCompatActivity{
                 }).show();
     }
 
-
+    @Override
+    public void finish() {
+        super.finish();
+    }
 }

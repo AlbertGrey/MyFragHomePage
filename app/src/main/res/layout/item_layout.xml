@@ -24,26 +24,50 @@
             android:textSize="16sp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"/>
+            android:layout_weight="1.5"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal">
-        <Button
-            android:id="@+id/item_message_btn"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="留言"/>
-        <Button
+        <ImageButton
             android:id="@+id/item_add_btn"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="收藏"
-            android:onClick="item_add_btn"/>
+            android:background="@drawable/ic_action_fav"
+            android:onClick="item_add_btn"
+            android:layout_marginLeft="20dp"/>
+        <ImageButton
+            android:id="@+id/item_message_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_action_chat"
+            android:layout_marginLeft="20dp"/>
+        <!--<Button-->
+            <!--android:id="@+id/item_message_btn"-->
+            <!--android:text="留言"-->
+            <!--android:textSize="20dp"-->
+            <!--android:textColor="#FFFFFF"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@drawable/ic_buttonshape"-->
+            <!--/>-->
+        <!--<Button-->
+            <!--android:id="@+id/item_add_btn"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@drawable/ic_buttonshape"-->
+            <!--android:text="收藏"-->
+            <!--android:textSize="20dp"-->
+            <!--android:textColor="#FFFFFF"-->
+            <!--android:onClick="item_add_btn"/>-->
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#AAAAAA" />
 
 
 </LinearLayout>

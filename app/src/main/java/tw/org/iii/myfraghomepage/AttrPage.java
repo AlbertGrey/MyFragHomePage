@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -40,7 +41,7 @@ public class AttrPage extends ListFragment {
     private String jstring;
     private JSONObject jsonObject;
     private MylistAdapter adapter;
-    private Button mesbtn,addbtn;
+    private ImageButton mesbtn,addbtn;
     private float screenWidth,screenHeight,newHeight;
     private RequestQueue queue;
     public static String urlip = "http://36.235.39.18:8080";
@@ -233,8 +234,8 @@ public class AttrPage extends ListFragment {
         public ImageView itemimage;
         public TextView itemtitle;
         public TextView itemaddress;
-        public Button mesbtn;
-        public Button addbtn;
+        public ImageButton mesbtn;
+        public ImageButton addbtn;
     }
 
 
