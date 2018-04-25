@@ -45,6 +45,7 @@ public class FoodPage extends ListFragment {
     private ImageButton mesbtn,addbtn;
     private float screenWidth,screenHeight,newHeight;
     private RequestQueue queue;
+    private FViewHolder holder;
 
 
     @Override
@@ -138,12 +139,11 @@ public class FoodPage extends ListFragment {
 
         @Override
         public View getView(final int position2, View view, ViewGroup viewGroup) {
-            ViewHolder holder;
             reslut = datas.get(position2);
             Log.v("grey","res==="+position2+"::"+reslut);
             Log.v("grey","reslut get="+reslut);
             if(view==null){
-                holder = new ViewHolder();
+                holder = new FViewHolder();
                 view = inflater.inflate(R.layout.item_layout,viewGroup,false);
                 inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 holder.itemtitle = (TextView)view.findViewById(R.id.item_title);
@@ -154,7 +154,7 @@ public class FoodPage extends ListFragment {
                 holder.addbtn = view.findViewById(R.id.item_add_btn);
                 Log.v("grey","resaid = "+reslut.getAid());
             }else{
-                holder = (ViewHolder) view.getTag();
+                holder = (FViewHolder) view.getTag();
             }
             //set reslut to textview
             holder.itemtitle.setText(reslut.getName());
@@ -220,7 +220,7 @@ public class FoodPage extends ListFragment {
 
     }
 
-    static class ViewHolder
+    static class FViewHolder
     {
         public ImageView itemimage;
         public TextView itemtitle;

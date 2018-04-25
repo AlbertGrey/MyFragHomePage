@@ -83,10 +83,12 @@ public class MainActivity extends AppCompatActivity {
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 //        pager.setOffscreenPageLimit(5);
         inittablayout();
+        //更新sp
         editor.putBoolean("signin",false);
         editor.putString("memberid","0");
         editor.commit();
         Log.v("grey","sign = "+(issignin?"true":"false"));
+
         //螢幕寬高
 //        DisplayMetrics metrics = new DisplayMetrics();
 //        getWindowManager().getDefaultDisplay().getMetrics(metrics);

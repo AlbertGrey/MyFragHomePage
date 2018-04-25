@@ -42,6 +42,7 @@ public class HotPage extends ListFragment {
     private ImageButton mesbtn,addbtn;
     private float screenWidth,screenHeight,newHeight;
     private RequestQueue queue;
+    private ViewHolder holder;
 
 
     @Override
@@ -134,7 +135,6 @@ public class HotPage extends ListFragment {
 
         @Override
         public View getView(final int i, View view, ViewGroup viewGroup) {
-            ViewHolder holder;
             reslut = datas.get(i);
             if(view==null){
                 holder = new ViewHolder();

@@ -32,6 +32,7 @@ import com.facebook.login.widget.LoginButton;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -166,6 +167,28 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         Log.v("grey","Responsea = "+response);
+                        String res = response.trim();
+                        if (res.equals("erro")){
+                            Log.v("grey","error="+response);
+                        }else{
+                            try {
+                                JSONObject j2 = new JSONObject(res);
+                                String mid = j2.getString("id");
+                                Log.v("grey","success");
+                                Log.v("grey","mid = "+mid);
+                                editor.putBoolean("signin",true);
+                                editor.putString("memberid",mid);
+                                editor.commit();
+                                Log.v("grey","logicbooleanpage = "+(issign?true:false));
+                                Intent intent =new Intent(getApplicationContext(),MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
                     }
                 }, null){
             @Override
