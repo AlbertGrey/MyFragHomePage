@@ -83,17 +83,13 @@ public class MainActivity extends AppCompatActivity {
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 //        pager.setOffscreenPageLimit(5);
         inittablayout();
+
         //更新sp
         editor.putBoolean("signin",false);
         editor.putString("memberid","0");
         editor.commit();
         Log.v("grey","sign = "+(issignin?"true":"false"));
 
-        //螢幕寬高
-//        DisplayMetrics metrics = new DisplayMetrics();
-//        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-//
-//        Log.v("grey","手機寬高 ＝" + metrics.widthPixels+" X "+metrics.heightPixels);
     }
 
     //menu
@@ -117,8 +113,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-
-
     //詢問權限
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -141,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
         fragments.add(new AttrPage());
         fragments.add(new FoodPage());
 
+        //sp設定
         sp = getSharedPreferences("memberdata",MODE_PRIVATE);
         editor = sp.edit();
         issignin = sp.getBoolean("signin",false);

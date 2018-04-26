@@ -61,7 +61,7 @@ public class HotPage extends ListFragment {
         protected LinkedList<AttrListModel> doInBackground(String... strings) {
             JSONArray jsonArray = null;
             data = new LinkedList<>();
-            jstring = JSONFuction.getJSONFromurl("http://36.235.39.18:8080/fsit04/User_favorite?user_id=3");
+            jstring = JSONFuction.getJSONFromurl(AttrPage.urlip+"/fsit04/User_favorite?user_id=3");
             Log.v("gery","jstringhot= "+jstring);
 
             try {

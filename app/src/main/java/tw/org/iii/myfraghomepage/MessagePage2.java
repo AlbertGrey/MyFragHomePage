@@ -68,15 +68,13 @@ public class MessagePage2 extends AppCompatActivity {
             case R.id.msg_edit:
                 if (MainActivity.issignin==true){
                     Log.v("grey","留言頁");
-
+                    Intent intent = new Intent(MessagePage2.this,AddMsgPage.class);
+                    startActivity(intent);
                 }else {
                     Intent intent = new Intent(MessagePage2.this,LoginActivity.class);
                     startActivity(intent);
                 }
         }
-
-
-
         return super.onOptionsItemSelected(item);
     }
 

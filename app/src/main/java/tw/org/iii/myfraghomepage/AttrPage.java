@@ -41,7 +41,7 @@ public class AttrPage extends ListFragment {
     private ImageButton mesbtn,addbtn;
     private float screenWidth,screenHeight,newHeight;
     private RequestQueue queue;
-    public static String urlip = "http://36.235.39.18:8080";
+    public static String urlip = "http://125.230.19.49:8080";
     private ViewHolder holder;
 
     @Override
@@ -193,7 +193,6 @@ public class AttrPage extends ListFragment {
                         reslut = datas.get(position);
                         addFavorite(MainActivity.memberid,reslut.getAid());
                         Log.v("grey",reslut.getAid());
-                        getFavorite("1");
                         showAletDialog();
                     }else {
                         Intent intent = new Intent(getActivity(),LoginActivity.class);
@@ -206,10 +205,10 @@ public class AttrPage extends ListFragment {
                 @Override
                 public void onClick(View view) {
                     reslut = datas.get(position);
-                    Intent intent = new Intent(getActivity(),MessagePage2.class);
-                    intent.putExtra("total_id",reslut.getAid());
-                    intent.putExtra("name",reslut.getName());
-                    startActivity(intent);
+//                    Intent intent = new Intent(getActivity(),MessagePage2.class);
+//                    intent.putExtra("total_id",reslut.getAid());
+//                    intent.putExtra("name",reslut.getName());
+//                    startActivity(intent);
                 }
             });
             Log.v("grey","attrsigh = "+MainActivity.issignin);
@@ -264,8 +263,6 @@ public class AttrPage extends ListFragment {
         public ImageButton addbtn;
     }
 
-
-
     private void addFavorite(String user_id,String total_id){
         String url =urlip+"/fsit04/User_favorite";
         Log.v("grey","user_id = "+ user_id);
@@ -290,48 +287,6 @@ public class AttrPage extends ListFragment {
         };
         queue.add(stringRequest);
 
-    }
-
-    private void deleteFavorite(String user_id,String total_id){
-        String url =urlip+"/fsit04/User_favorite";
-
-        final String p1 =user_id;
-        final String p2=total_id;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.v("grey","deletelike = "+response);
-                    }
-                }, null){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> m1 =new HashMap<>();
-                m1.put("_method","DELETE");
-                m1.put("user_id",p1);
-                m1.put("total_id", p2);
-
-                return m1;
-            }
-        };
-        queue.add(stringRequest);
-
-    }
-
-    private void getFavorite(String user_id){
-        final String p1=user_id;
-        String url =urlip+"/fsit04/User_favorite?user_id="+p1;
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.v("grey","attgetfav = "+response);
-
-
-                    }
-                }, null);
-
-        queue.add(stringRequest);
     }
 
 }

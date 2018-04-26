@@ -5,7 +5,7 @@
     <item
         android:title=""
         android:id="@+id/msg_edit"
-        android:icon="@drawable/ic_edit"
+        android:icon="@drawable/ic_action_msg_add"
         app:showAsAction="always"/>
 
 </menu>

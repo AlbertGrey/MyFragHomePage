@@ -28,7 +28,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30dp"
-            android:hint="請輸入電子郵件"/>
+            android:hint="請輸入電子信箱"
+            />
     </LinearLayout>
 
     <LinearLayout

@@ -1,11 +1,11 @@
 package tw.org.iii.myfraghomepage;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -25,7 +25,6 @@ import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -43,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     private RequestQueue queue;
+
     private  SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private boolean issign;
@@ -58,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         editor = sp.edit();
         issign = sp.getBoolean("signin",true);
         Log.v("grey","logicboolean = "+(issign?true:false));
+
         callbackManager = CallbackManager.Factory.create();
 
         loginbtn = findViewById(R.id.login_button2);
@@ -95,10 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                                     String name = object.getString("name");
                                     Log.v("grey",name+":"+email+":"+birthday);
                                     sighin(email,name,"123","fb");
-                                    editor.putBoolean("signin",true);
-                                    editor.commit();
-                                    Log.v("grey","logicboolean = "+(issign?true:false));
-                                    finish();
+
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -119,23 +117,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-//        LoginManager.getInstance().registerCallback(callbackManager,
-//                new FacebookCallback<LoginResult>() {
-//                    @Override
-//                    public void onSuccess(LoginResult loginResult) {
-//                        // App code
-//                    }
-//
-//                    @Override
-//                    public void onCancel() {
-//                        // App code
-//                    }
-//
-//                    @Override
-//                    public void onError(FacebookException exception) {
-//                        // App code
-//                    }
-//                });
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -176,13 +157,13 @@ public class LoginActivity extends AppCompatActivity {
                                 String mid = j2.getString("id");
                                 Log.v("grey","success");
                                 Log.v("grey","mid = "+mid);
+
                                 editor.putBoolean("signin",true);
                                 editor.putString("memberid",mid);
                                 editor.commit();
                                 Log.v("grey","logicbooleanpage = "+(issign?true:false));
-                                Intent intent =new Intent(getApplicationContext(),MainActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
+
+                                signinscccess();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -204,5 +185,20 @@ public class LoginActivity extends AppCompatActivity {
 
 
         queue.add(stringRequest);
+    }
+
+    private void signinscccess(){
+        new AlertDialog.Builder(LoginActivity.this)
+                .setTitle(" ")
+                .setMessage("登入成功")
+                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        finish();
+                        Intent intent =new Intent(getApplicationContext(),MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+                }).show();
     }
 }

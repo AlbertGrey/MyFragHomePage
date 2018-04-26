@@ -115,10 +115,7 @@ public class LoginPage extends AppCompatActivity{
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
-
                         }
-
                     }
                 }, null){
             @Override

@@ -137,8 +137,6 @@ public class SearchPage extends AppCompatActivity {
                 m1.put("param",p1);
                 Log.v("grey","param + "+m1);
                 return m1;
-
-
             }
         };
 
@@ -285,7 +283,6 @@ public class SearchPage extends AppCompatActivity {
             holder.mesbtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     Intent intent = new Intent(SearchPage.this,MessagePage.class);
                     startActivity(intent);
                 }
